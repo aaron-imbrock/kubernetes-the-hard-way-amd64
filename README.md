@@ -1,6 +1,6 @@
 # Kubernetes The Hard Way
 
-This tutorial walks you through setting up Kubernetes the hard way. It's the same as Hightower's k-t-hard-way guide except `downloads.txt` is updated for v1.31.2 k8s on the amd64 architecture.
+This tutorial walks you through setting up Kubernetes the hard way. It's the same as Hightower's original kubernetes-the-hard-way guide except `downloads.txt` is updated for v1.31.2 k8s on the amd64 architecture.
 
 This guide is not for someone looking for a fully automated tool to bring up a Kubernetes cluster. Kubernetes The Hard Way is optimized for learning, which means taking the long route to ensure you understand each task required to bootstrap a Kubernetes cluster.
 
