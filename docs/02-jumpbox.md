@@ -26,13 +26,13 @@ Now it's time to download a copy of this tutorial which contains the configurati
 
 ```bash
 git clone --depth 1 \
-https://github.com/aaron-imbrock/kubernetes-the-hard-way-amd64.git
+    https://github.com/aaron-imbrock/kubernetes-the-hard-way-amd64.git
 ```
 
-Change into the `kubernetes-the-hard-way` directory:
+Change into the `kubernetes-the-hard-way-amd64` directory:
 
 ```bash
-cd kubernetes-the-hard-way
+cd kubernetes-the-hard-way-amd64
 ```
 
 This will be the working directory for the rest of the tutorial. If you ever get lost run the `pwd` command to verify you are in the right directory when running commands on the `jumpbox`:
@@ -42,7 +42,7 @@ pwd
 ```
 
 ```text
-/root/kubernetes-the-hard-way
+/root/kubernetes-the-hard-way-amd64
 ```
 
 ### Download Binaries
