@@ -77,6 +77,7 @@ Depending on your internet connection speed it may take a while to download the 
 ls -loh downloads
 ```
 
+## TODO: Update for v1.31 and AMD64
 ```text
 total 584M
 -rw-r--r-- 1 root  41M May  9 13:35 cni-plugins-linux-arm64-v1.3.0.tgz
