@@ -1,5 +1,3 @@
-## TODO: Update for v1.31 and AMD64
-
 # Configuring kubectl for Remote Access
 
 In this lab you will generate a kubeconfig file for the `kubectl` command line utility based on the `admin` user credentials.
@@ -20,14 +18,14 @@ curl -k --cacert ca.crt \
 ```text
 {
   "major": "1",
-  "minor": "28",
-  "gitVersion": "v1.28.3",
-  "gitCommit": "a8a1abc25cad87333840cd7d54be2efaf31a3177",
+  "minor": "31",
+  "gitVersion": "v1.31.2",
+  "gitCommit": "5864a4677267e6adeae276ad85882a8714d69d9d",
   "gitTreeState": "clean",
-  "buildDate": "2023-10-18T11:33:18Z",
-  "goVersion": "go1.20.10",
+  "buildDate": "2024-10-22T20:28:14Z",
+  "goVersion": "go1.22.8",
   "compiler": "gc",
-  "platform": "linux/arm64"
+  "platform": "linux/amd64"
 }
 ```
 
@@ -63,9 +61,9 @@ kubectl version
 ```
 
 ```text
-Client Version: v1.28.3
-Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
-Server Version: v1.28.3
+Client Version: v1.31.2
+Kustomize Version: v5.4.2
+Server Version: v1.31.2
 ```
 
 List the nodes in the remote Kubernetes cluster:
@@ -76,8 +74,8 @@ kubectl get nodes
 
 ```
 NAME     STATUS   ROLES    AGE   VERSION
-node-0   Ready    <none>   30m   v1.28.3
-node-1   Ready    <none>   35m   v1.28.3
+node-0   Ready    <none>   33m   v1.31.2
+node-1   Ready    <none>   33m   v1.31.2
 ```
 
 Next: [Provisioning Pod Network Routes](11-pod-network-routes.md)
