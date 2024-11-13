@@ -4,7 +4,7 @@ In this lab you will bootstrap the Kubernetes control plane. The following compo
 
 ## Prerequisites
 
-Copy Kubernetes binaries and systemd unit files to the `server` instance:
+From `jumpbox` copy Kubernetes binaries and systemd unit files to the `server` instance:
 
 ```bash
 scp \
@@ -43,7 +43,7 @@ Install the Kubernetes binaries:
   chmod +x kube-apiserver \
     kube-controller-manager \
     kube-scheduler kubectl
-    
+
   mv kube-apiserver \
     kube-controller-manager \
     kube-scheduler kubectl \
@@ -111,10 +111,10 @@ mv kube-scheduler.service /etc/systemd/system/
 ```bash
 {
   systemctl daemon-reload
-  
+
   systemctl enable kube-apiserver \
     kube-controller-manager kube-scheduler
-    
+
   systemctl start kube-apiserver \
     kube-controller-manager kube-scheduler
 }
@@ -166,14 +166,14 @@ curl -k --cacert ca.crt https://server.kubernetes.local:6443/version
 ```text
 {
   "major": "1",
-  "minor": "28",
-  "gitVersion": "v1.28.3",
-  "gitCommit": "a8a1abc25cad87333840cd7d54be2efaf31a3177",
+  "minor": "31",
+  "gitVersion": "v1.31.2",
+  "gitCommit": "5864a4677267e6adeae276ad85882a8714d69d9d",
   "gitTreeState": "clean",
-  "buildDate": "2023-10-18T11:33:18Z",
-  "goVersion": "go1.20.10",
+  "buildDate": "2024-10-22T20:28:14Z",
+  "goVersion": "go1.22.8",
   "compiler": "gc",
-  "platform": "linux/arm64"
+  "platform": "linux/amd64"
 }
 ```
 
