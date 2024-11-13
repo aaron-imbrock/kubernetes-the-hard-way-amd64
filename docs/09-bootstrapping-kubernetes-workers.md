@@ -4,17 +4,17 @@ In this lab you will bootstrap two Kubernetes worker nodes. The following compon
 
 ## Prerequisites
 
-Copy Kubernetes binaries and systemd unit files to each worker instance:
+From `jumpbox` copy Kubernetes binaries and systemd unit files to each worker instance:
 
 ```bash
 for host in node-0 node-1; do
   SUBNET=$(grep $host machines.txt | cut -d " " -f 4)
   sed "s|SUBNET|$SUBNET|g" \
-    configs/10-bridge.conf > 10-bridge.conf 
-    
+    configs/10-bridge.conf > 10-bridge.conf
+
   sed "s|SUBNET|$SUBNET|g" \
     configs/kubelet-config.yaml > kubelet-config.yaml
-    
+
   scp 10-bridge.conf kubelet-config.yaml \
   root@$host:~/
 done
@@ -23,16 +23,15 @@ done
 ```bash
 for host in node-0 node-1; do
   scp \
-    downloads/runc.arm64 \
-    downloads/crictl-v1.28.0-linux-arm.tar.gz \
-    downloads/cni-plugins-linux-arm64-v1.3.0.tgz \
-    downloads/containerd-1.7.8-linux-arm64.tar.gz \
+    downloads/runc.amd64 \
+    downloads/crictl-v1.31.1-linux-amd64.tar.gz \
+    downloads/cni-plugins-linux-amd64-v1.5.1.tgz \
+    downloads/containerd-1.7.13-linux-amd64.tar.gz \
     downloads/kubectl \
     downloads/kubelet \
     downloads/kube-proxy \
     configs/99-loopback.conf \
     configs/containerd-config.toml \
-    # configs/kubelet-config.yaml \
     configs/kube-proxy-config.yaml \
     units/containerd.service \
     units/kubelet.service \
@@ -54,8 +53,13 @@ Install the OS dependencies:
 ```bash
 {
   apt-get update
-  apt-get -y install socat conntrack ipset
+  apt-get -y install socat conntrack ipset iptables
 }
+```
+
+Load the kernel module `nf_conntrack`:
+```bash
+modprobe nf_conntrack
 ```
 
 > The socat binary enables support for the `kubectl port-forward` command.
@@ -78,6 +82,22 @@ swapoff -a
 
 > To ensure swap remains off after reboot consult your Linux distro documentation.
 
+### Lab file
+
+Disable swap by commenting out the `swap` entry in `/etc/fstab`:
+
+```bash
+sed -i '/\bswap\b/s/^/# /' /etc/fstab
+```
+
+```text
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/vda1 during installation
+UUID=2c9bf5c0-76d4-43fc-94ac-11242ad36224 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/vda5 during installation
+# UUID=a4f7d063-4ba5-45b3-adcf-7effd2d845d1 none            swap    sw              0       0
+```
+
 Create the installation directories:
 
 ```bash
@@ -95,11 +115,11 @@ Install the worker binaries:
 ```bash
 {
   mkdir -p containerd
-  tar -xvf crictl-v1.28.0-linux-arm.tar.gz
-  tar -xvf containerd-1.7.8-linux-arm64.tar.gz -C containerd
-  tar -xvf cni-plugins-linux-arm64-v1.3.0.tgz -C /opt/cni/bin/
-  mv runc.arm64 runc
-  chmod +x crictl kubectl kube-proxy kubelet runc 
+  tar -xvf crictl-v1.31.1-linux-amd64.tar.gz
+  tar -xvf containerd-1.7.13-linux-amd64.tar.gz -C containerd
+  tar -xvf cni-plugins-linux-amd64-v1.5.1.tgz -C /opt/cni/bin/
+  mv runc.amd64 runc
+  chmod +x crictl kubectl kube-proxy kubelet runc
   mv crictl kubectl kube-proxy kubelet runc /usr/local/bin/
   mv containerd/bin/* /bin/
 }
@@ -168,9 +188,9 @@ ssh root@server \
 ```
 
 ```
-NAME     STATUS   ROLES    AGE    VERSION
-node-0   Ready    <none>   1m     v1.28.3
-node-1   Ready    <none>   10s    v1.28.3
+NAME     STATUS   ROLES    AGE   VERSION
+node-0   Ready    <none>   17m   v1.31.2
+node-1   Ready    <none>   17m   v1.31.2
 ```
 
 Next: [Configuring kubectl for Remote Access](10-configuring-kubectl.md)
