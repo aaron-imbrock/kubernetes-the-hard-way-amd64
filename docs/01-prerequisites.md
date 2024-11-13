@@ -4,14 +4,14 @@ In this lab you will review the machine requirements necessary to follow this tu
 
 ## Virtual or Physical Machines
 
-This tutorial requires four (4) virtual or physical AMD64 machines running Debian 12 (bookworm). The follow table list the four machines and their CPU, memory, and storage requirements.
+This tutorial requires four (4) virtual or physical AMD64 machines running Debian 12 (bookworm). The follow table lists the four machines and their CPU, memory, and storage requirements. Any IPs can be used but for this lab the host IPs are 10.0.0.20-23/32.
 
-| Name    | Description            | CPU | RAM   | Storage |
-|---------|------------------------|-----|-------|---------|
-| jumpbox | Administration host    | 1   | 512MB | 10GB    |
-| server  | Kubernetes server      | 1   | 2GB   | 20GB    |
-| node-0  | Kubernetes worker node | 1   | 2GB   | 20GB    |
-| node-1  | Kubernetes worker node | 1   | 2GB   | 20GB    |
+| Name    | Description            | CPU | RAM   | Storage | IPV4_ADDRESS | POD_SUBNET     |
+|---------|------------------------|-----|-------|---------|--------------|----------------|
+| jumpbox | Administration host    | 1   | 512MB | 10GB    | 10.0.0.20/32 | -              |
+| server  | Kubernetes server      | 1   | 2GB   | 20GB    | 10.0.0.21/32 | -              |
+| node-0  | Kubernetes worker node | 1   | 2GB   | 20GB    | 10.0.0.22/32 | 192.168.0.0/24 |
+| node-1  | Kubernetes worker node | 1   | 2GB   | 20GB    | 10.0.0.23/32 | 192.168.1.0/24 |
 
 How you provision the machines is up to you, the only requirement is that each machine meet the above system requirements including the machine specs and OS version. Once you have all four machine provisioned, verify the system requirements by running the `uname` command on each machine:
 

@@ -10,7 +10,7 @@ This tutorial will leverage a text file, which will serve as a machine database,
 IPV4_ADDRESS FQDN HOSTNAME POD_SUBNET
 ```
 
-Each of the columns corresponds to a machine IP address `IPV4_ADDRESS`, fully qualified domain name `FQDN`, host name `HOSTNAME`, and the IP subnet `POD_SUBNET`. Kubernetes assigns one IP address per `pod` and the `POD_SUBNET` represents the unique IP address range assigned to each machine in the cluster for doing so.  
+Each of the columns corresponds to a machine IP address `IPV4_ADDRESS`, fully qualified domain name `FQDN`, host name `HOSTNAME`, and the IP subnet `POD_SUBNET`. Kubernetes assigns one IP address per `pod` and the `POD_SUBNET` represents the unique IP address range assigned to each machine in the cluster for doing so.
 
 Here is an example machine database similar to the one used when creating this tutorial. Notice the IP addresses have been masked out. Your machines can be assigned any IP address as long as each machine is reachable from each other and the `jumpbox`.
 
@@ -19,12 +19,26 @@ cat machines.txt
 ```
 
 ```text
-XXX.XXX.XXX.XXX server.kubernetes.local server  
+XXX.XXX.XXX.XXX server.kubernetes.local server
 XXX.XXX.XXX.XXX node-0.kubernetes.local node-0 10.200.0.0/24
 XXX.XXX.XXX.XXX node-1.kubernetes.local node-1 10.200.1.0/24
 ```
 
-Now it's your turn to create a `machines.txt` file with the details for the three machines you will be using to create your Kubernetes cluster. Use the example machine database from above and add the details for your machines. 
+Now it's your turn to create a `machines.txt` file with the details for the three machines you will be using to create your Kubernetes cluster. Use the example machine database from above and add the details for your machines.
+
+### Lab file
+
+For this lab, the following layout will be used.
+
+```bash
+cat machines.txt
+```
+
+```text
+10.0.0.21 server.kubernetes.local server
+10.0.0.22 node-0.kubernetes.local node-0 192.168.0.0/24
+10.0.0.23 node-1.kubernetes.local node-1 192.168.1.0/24
+```
 
 ## Configuring SSH Access
 
@@ -66,17 +80,26 @@ ssh-keygen
 
 ```text
 Generating public/private rsa key pair.
-Enter file in which to save the key (/root/.ssh/id_rsa): 
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
 Your identification has been saved in /root/.ssh/id_rsa
 Your public key has been saved in /root/.ssh/id_rsa.pub
+```
+
+Create `/root/.ssh/config` and add the following:
+```text
+cat >> /root/.ssh/config
+Host *
+	StrictHostKeyChecking no
+	UserKnownHostsFile=/dev/null
+	LogLevel QUIET
 ```
 
 Copy the SSH public key to each machine:
 
 ```bash
-while read IP FQDN HOST SUBNET; do 
+while read IP FQDN HOST SUBNET; do
   ssh-copy-id root@${IP}
 done < machines.txt
 ```
@@ -84,15 +107,15 @@ done < machines.txt
 Once each key is added, verify SSH public key access is working:
 
 ```bash
-while read IP FQDN HOST SUBNET; do 
+while read IP FQDN HOST SUBNET; do
   ssh -n root@${IP} uname -o -m
 done < machines.txt
 ```
 
 ```text
-aarch64 GNU/Linux
-aarch64 GNU/Linux
-aarch64 GNU/Linux
+x86_64 GNU/Linux
+x86_64 GNU/Linux
+x86_64 GNU/Linux
 ```
 
 ## Hostnames
@@ -104,7 +127,7 @@ To configure the hostname for each machine, run the following commands on the `j
 Set the hostname on each machine listed in the `machines.txt` file:
 
 ```bash
-while read IP FQDN HOST SUBNET; do 
+while read IP FQDN HOST SUBNET; do
     CMD="sed -i 's/^127.0.1.1.*/127.0.1.1\t${FQDN} ${HOST}/' /etc/hosts"
     ssh -n root@${IP} "$CMD"
     ssh -n root@${IP} hostnamectl hostname ${HOST}
@@ -139,7 +162,7 @@ echo "# Kubernetes The Hard Way" >> hosts
 Generate a DNS entry for each machine in the `machines.txt` file and append it to the `hosts` file:
 
 ```bash
-while read IP FQDN HOST SUBNET; do 
+while read IP FQDN HOST SUBNET; do
     ENTRY="${IP} ${FQDN} ${HOST}"
     echo $ENTRY >> hosts
 done < machines.txt
@@ -157,6 +180,21 @@ cat hosts
 XXX.XXX.XXX.XXX server.kubernetes.local server
 XXX.XXX.XXX.XXX node-0.kubernetes.local node-0
 XXX.XXX.XXX.XXX node-1.kubernetes.local node-1
+```
+### Lab file
+
+For this lab, the following layout will be used.
+
+```bash
+cat hosts
+```
+
+```text
+
+# Kubernetes The Hard Way
+10.0.0.21 server.kubernetes.local server
+10.0.0.22 node-0.kubernetes.local node-0
+10.0.0.23 node-1.kubernetes.local node-1
 ```
 
 ## Adding DNS Entries To A Local Machine
@@ -191,6 +229,28 @@ XXX.XXX.XXX.XXX server.kubernetes.local server
 XXX.XXX.XXX.XXX node-0.kubernetes.local node-0
 XXX.XXX.XXX.XXX node-1.kubernetes.local node-1
 ```
+### Lab file
+
+For this lab, the following layout will be used.
+
+```bash
+cat /etc/hosts
+```
+
+```text
+127.0.0.1	localhost
+127.0.1.1	jumpbox
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+# Kubernetes The Hard Way
+10.0.0.21 server.kubernetes.local server
+10.0.0.22 node-0.kubernetes.local node-0
+10.0.0.23 node-1.kubernetes.local node-1
+```
 
 At this point you should be able to SSH to each machine listed in the `machines.txt` file using a hostname.
 
@@ -201,9 +261,9 @@ done
 ```
 
 ```text
-server aarch64 GNU/Linux
-node-0 aarch64 GNU/Linux
-node-1 aarch64 GNU/Linux
+server x86_64 GNU/Linux
+node-0 x86_64 GNU/Linux
+node-1 x86_64 GNU/Linux
 ```
 
 ## Adding DNS Entries To The Remote Machines
