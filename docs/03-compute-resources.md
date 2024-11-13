@@ -91,9 +91,10 @@ Create `/root/.ssh/config` and add the following:
 ```text
 cat >> /root/.ssh/config
 Host *
-	StrictHostKeyChecking no
-	UserKnownHostsFile=/dev/null
-	LogLevel QUIET
+        User root
+        StrictHostKeyChecking no
+        UserKnownHostsFile=/dev/null
+        LogLevel QUIET
 ```
 
 Copy the SSH public key to each machine:
