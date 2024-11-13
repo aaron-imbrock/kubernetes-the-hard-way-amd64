@@ -41,38 +41,67 @@ ssh root@node-1 <<EOF
 EOF
 ```
 
-## Verification 
+## Verification
+
+### Server
 
 ```bash
 ssh root@server ip route
 ```
-
 ```text
-default via XXX.XXX.XXX.XXX dev ens160 
-10.200.0.0/24 via XXX.XXX.XXX.XXX dev ens160 
-10.200.1.0/24 via XXX.XXX.XXX.XXX dev ens160 
-XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX 
+default via XXX.XXX.XXX.XXX dev ens160
+10.200.0.0/24 via XXX.XXX.XXX.XXX dev ens160
+10.200.1.0/24 via XXX.XXX.XXX.XXX dev ens160
+XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX
 ```
+
+#### Lab Output
+
+```bash
+default via 10.0.0.1 dev enp1s0
+10.0.0.0/24 dev enp1s0 proto kernel scope link src 10.0.0.21
+192.168.0.0/24 via 10.0.0.22 dev enp1s0
+192.168.1.0/24 via 10.0.0.23 dev enp1s0
+```
+
+### Node-0
 
 ```bash
 ssh root@node-0 ip route
 ```
 
 ```text
-default via XXX.XXX.XXX.XXX dev ens160 
-10.200.1.0/24 via XXX.XXX.XXX.XXX dev ens160 
-XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX 
+default via XXX.XXX.XXX.XXX dev ens160
+10.200.1.0/24 via XXX.XXX.XXX.XXX dev ens160
+XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX
 ```
+
+#### Lab Output
+
+```bash
+default via 10.0.0.1 dev enp1s0
+10.0.0.0/24 dev enp1s0 proto kernel scope link src 10.0.0.22
+192.168.1.0/24 via 10.0.0.23 dev enp1s0
+```
+
+### Node-1
 
 ```bash
 ssh root@node-1 ip route
 ```
 
 ```text
-default via XXX.XXX.XXX.XXX dev ens160 
-10.200.0.0/24 via XXX.XXX.XXX.XXX dev ens160 
-XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX 
+default via XXX.XXX.XXX.XXX dev ens160
+10.200.0.0/24 via XXX.XXX.XXX.XXX dev ens160
+XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX
 ```
 
+#### Lab Output
+
+```bash
+default via 10.0.0.1 dev enp1s0
+10.0.0.0/24 dev enp1s0 proto kernel scope link src 10.0.0.23
+192.168.0.0/24 via 10.0.0.22 dev enp1s0
+```
 
 Next: [Smoke Test](12-smoke-test.md)
