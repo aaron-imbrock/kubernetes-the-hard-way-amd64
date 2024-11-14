@@ -1,6 +1,6 @@
 # Kubernetes The Hard Way
 
-This tutorial walks you through setting up Kubernetes the hard way. It's the same as Hightower's original kubernetes-the-hard-way guide except `downloads.txt` is updated for v1.31.2 k8s on the amd64 architecture.
+This tutorial walks you through setting up Kubernetes the hard way. While largely the same as Hightower's excellent [kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way), this guide focuses on the `amd64` architecture and to match the current (v1.31) CKA.
 
 This guide is not for someone looking for a fully automated tool to bring up a Kubernetes cluster. Kubernetes The Hard Way is optimized for learning, which means taking the long route to ensure you understand each task required to bootstrap a Kubernetes cluster.
 
@@ -28,7 +28,7 @@ Component versions:
 
 ## Labs
 
-This tutorial requires four (4) AMD64 based virtual or physical machines connected to the same network. While ARM64 based machines are used for the tutorial, the lessons learned can be applied to other platforms.
+This tutorial requires four (4) AMD64 based virtual or physical machines connected to the same network. While AMD64 based machines are used for the tutorial, the lessons learned can be applied to other platforms.
 
 * [Prerequisites](docs/01-prerequisites.md)
 * [Setting up the Jumpbox](docs/02-jumpbox.md)
