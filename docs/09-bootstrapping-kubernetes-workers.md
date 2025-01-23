@@ -64,7 +64,7 @@ modprobe nf_conntrack
 
 > The socat binary enables support for the `kubectl port-forward` command.
 
-### Disable Swap
+### Verify swap is disabled
 
 By default, the kubelet will fail to start if [swap](https://help.ubuntu.com/community/SwapFaq) is enabled. It is [recommended](https://github.com/kubernetes/kubernetes/issues/7294) that swap be disabled to ensure Kubernetes can provide proper resource allocation and quality of service.
 
@@ -82,7 +82,7 @@ swapoff -a
 
 > To ensure swap remains off after reboot consult your Linux distro documentation.
 
-### Disable swap
+### Permanently Disable swap
 
 Disable swap by commenting out the `swap` entry in `/etc/fstab`:
 
