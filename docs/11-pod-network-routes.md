@@ -58,10 +58,10 @@ XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX
 #### Lab Output
 
 ```bash
-default via 10.0.0.1 dev enp1s0
+default via 10.0.0.1 dev enp1s0 onlink
 10.0.0.0/24 dev enp1s0 proto kernel scope link src 10.0.0.21
-192.168.0.0/24 via 10.0.0.22 dev enp1s0
-192.168.1.0/24 via 10.0.0.23 dev enp1s0
+10.200.0.0/24 via 10.0.0.22 dev enp1s0
+10.200.1.0/24 via 10.0.0.23 dev enp1s0
 ```
 
 ### Node-0
@@ -81,7 +81,7 @@ XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX
 ```bash
 default via 10.0.0.1 dev enp1s0
 10.0.0.0/24 dev enp1s0 proto kernel scope link src 10.0.0.22
-192.168.1.0/24 via 10.0.0.23 dev enp1s0
+10.200.1.0/24 via 10.0.0.23 dev enp1s0
 ```
 
 ### Node-1
@@ -101,7 +101,7 @@ XXX.XXX.XXX.0/24 dev ens160 proto kernel scope link src XXX.XXX.XXX.XXX
 ```bash
 default via 10.0.0.1 dev enp1s0
 10.0.0.0/24 dev enp1s0 proto kernel scope link src 10.0.0.23
-192.168.0.0/24 via 10.0.0.22 dev enp1s0
+10.200.0.0/24 via 10.0.0.22 dev enp1s0
 ```
 
 Next: [Smoke Test](12-smoke-test.md)
