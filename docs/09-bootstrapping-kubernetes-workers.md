@@ -174,7 +174,10 @@ Create the `kubelet-config.yaml` configuration file:
   systemctl start containerd kubelet kube-proxy
 }
 ```
+### Repeat steps for node-1 
 
+  Return to `jumpbox` and repeat the above steps for `node-1`.
+  
 ## Verification
 
 The compute instances created in this tutorial will not have permission to complete this section. Run the following commands from the `jumpbox` machine.
