@@ -40,7 +40,7 @@ for host in node-0 node-1; do
 done
 ```
 
-The commands in this lab must be run on each worker instance: `node-0`, `node-1`. Login to the worker instance using the `ssh` command. Example:
+The below commands in this lab must be run on each worker instance: `node-0`, `node-1`. Only `node-0` is used in this example.
 
 ```bash
 ssh root@node-0
@@ -82,7 +82,7 @@ swapoff -a
 
 > To ensure swap remains off after reboot consult your Linux distro documentation.
 
-### Lab file
+### Disable swap
 
 Disable swap by commenting out the `swap` entry in `/etc/fstab`:
 
@@ -98,7 +98,7 @@ UUID=2c9bf5c0-76d4-43fc-94ac-11242ad36224 /               ext4    errors=remount
 # UUID=a4f7d063-4ba5-45b3-adcf-7effd2d845d1 none            swap    sw              0       0
 ```
 
-Create the installation directories:
+### Create the installation directories:
 
 ```bash
 mkdir -p \
@@ -110,7 +110,7 @@ mkdir -p \
   /var/run/kubernetes
 ```
 
-Install the worker binaries:
+### Install the worker binaries:
 
 ```bash
 {
